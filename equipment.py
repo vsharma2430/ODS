@@ -6,4 +6,3 @@ class equipment :
     bolt = bolt_data()
     load = vessel_load()
     vessel_segments = []
-    

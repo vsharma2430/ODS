@@ -1,12 +1,16 @@
 class load_data:
+    axial : float
     moment : float
     shear : float
+    axial_factor : float
     moment_factor : float
     shear_factor : float
 
-    def __init__(self,moment=1.0,shear=1.0,moment_factor = 1.0,shear_factor=1.0):
+    def __init__(self,axial=1.0,moment=1.0,shear=1.0,axial_factor=1.0,moment_factor = 1.0,shear_factor=1.0):
+        self.axial = axial
         self.moment = moment
         self.shear = shear
+        self.axial_factor = axial_factor
         self.moment_factor = moment_factor
         self.shear_factor = shear_factor
 

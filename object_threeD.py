@@ -10,6 +10,8 @@ class point :
 class shape:
     def area(self):
         pass
+    def section_modulus(self):
+        pass
 
 class shape_circle (shape):
     center = point()

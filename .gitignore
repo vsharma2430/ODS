@@ -2,7 +2,10 @@
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Report dynamic elements
 *.html
+Report/nomograph.png
 
 # C extensions
 *.so

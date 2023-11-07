@@ -18,7 +18,7 @@ def nomograph_value(x_val,ed_array,L_array,k_array):
 def nomomgraph_value_octagon_diagonal(x_val):
     return nomograph_value(x_val,eDivD_octagon_diagonal,L_octagon_diagonal,k_octagon_diagonal)
 
-def show_octagon_nomograph(ed_array,L_array,k_array):
+def print_nomograph(ed_array,L_array,k_array):
     
     fig, plt1 = plt.subplots()
     # generate evenly spaced values between the minimum and maximum x values
@@ -42,11 +42,14 @@ def show_octagon_nomograph(ed_array,L_array,k_array):
     plt2.plot(x_interp, y_interp_2,'-r')
 
     fig.tight_layout() 
-    plt.show()
+    plt.savefig("Report/nomograph.png")
 
+def print_octagon_nomograph():
+    print_nomograph(eDivD_octagon_diagonal,L_octagon_diagonal,k_octagon_diagonal)
+    
 #show_octagon_nomograph(eDivD_octagon_diagonal,L_octagon_diagonal,k_octagon_diagonal)
 
-print(nomomgraph_value_octagon_diagonal(0.25))
+#print(nomomgraph_value_octagon_diagonal(0.25))
 
 
 

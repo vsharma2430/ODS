@@ -73,6 +73,10 @@ class shape_octagon (shape):
     area_factor = 0.828427125
     section_modulus_factor = 0.079758898
     section_modulus_mm_factor = 0.073687764
+    #PIP Factors
+    side_diagonal_factor = 2.414213562
+    side_diameter_factor = 2.613125929
+    diagonal_diameter_factor = 1.0823922
 
     def area(self):
         return self.area_factor * self.side * self.side

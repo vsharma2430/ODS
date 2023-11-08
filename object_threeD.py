@@ -3,6 +3,7 @@ from material import material
 from material import water
 import markdown2
 from markdown2 import Markdown
+from misc import roundOff
 
 markdowner = Markdown()
 
@@ -115,14 +116,14 @@ class object_3d :
         report_html_list = []
         report_html_list.append("| Property | Value |" + "\n" + "| --- | --- |")
         report_html_list.append("| Shape | " + self.shape_name + "|")
-        report_html_list.append("| Dimension | " + str(self.shape_object.dimension())+ "|")
-        report_html_list.append("| Top Elevation | " + str(self.top_elevation)+ "|")
-        report_html_list.append("| Bottom Elevation | " + str(self.bottom_elevation)+ "|")
-        report_html_list.append("| Density | " + str(self.material.density)+ "|")
-        report_html_list.append("| Area | " + str(self.shape_object.area())+ "|")
-        report_html_list.append("| Section Modulus (major) | " + str(self.shape_object.section_modulus_major())+ "|")
-        report_html_list.append("| Section Modulus (minor) | " + str(self.shape_object.section_modulus_minor())+ "|")
-        report_html_list.append("| Weight | " + str(self.weight())+ "|")
+        report_html_list.append("| Dimension | " + roundOff(self.shape_object.dimension())+ "|")
+        report_html_list.append("| Top Elevation | " + roundOff(self.top_elevation)+ "|")
+        report_html_list.append("| Bottom Elevation | " + roundOff(self.bottom_elevation)+ "|")
+        report_html_list.append("| Density | " + roundOff(self.material.density)+ "|")
+        report_html_list.append("| Area | " + roundOff(self.shape_object.area())+ "|")
+        report_html_list.append("| Section Modulus (major) | " + roundOff(self.shape_object.section_modulus_major())+ "|")
+        report_html_list.append("| Section Modulus (minor) | " + roundOff(self.shape_object.section_modulus_minor())+ "|")
+        report_html_list.append("| Weight | " + roundOff(self.weight())+ "|")
         return markdown2.markdown(text="\n".join(report_html_list), extras=["tables"])
 
     def __init__(self, shape_name,dimension):

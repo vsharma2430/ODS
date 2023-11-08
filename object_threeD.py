@@ -114,7 +114,7 @@ class object_3d :
 
     def properties_report(self):
         report_html_list = []
-        width_table = [200,100]
+        width_table = [300,200]
         report_html_list.append("| Property | Value |")
         report_html_list.append("|:---|:---:|")
         report_html_list.append("".join(map(lambda wid: "|<img width=" + str(wid) + "/>", width_table)))

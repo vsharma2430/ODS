@@ -21,11 +21,11 @@ class load_data:
 
     def report(self):
         report_html_list = []
-        width_table = [200,100,100]
+        width_table = [150,250,100]
         report_html_list.append("| Type | Value | Factor")
         report_html_list.append("|:---|:---:|:---:|")
         report_html_list.append("".join(map(lambda wid: "|<img width=" + str(wid) + "/>", width_table)))
-        report_html_list.append("| Name | " + roundOff(self.axial) + "|" + self.name + "|")
+        report_html_list.append("| Name | " + self.name + "|")
         report_html_list.append("| Axial | " + roundOff(self.axial) + "|" + roundOff(self.axial_factor) + "|")
         report_html_list.append("| Shear | " + roundOff(self.shear) + "|" + roundOff(self.shear_factor) + "|")
         report_html_list.append("| Moment | " + roundOff(self.moment) + "|" + roundOff(self.moment_factor) + "|")

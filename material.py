@@ -1,5 +1,5 @@
 class soil_property :
-    soil_capacity = 1.0
+    soil_capacity = 10 * 1000       #kPa to n/m
     coeff_friction = 0.3
     soil_capacity_wind_increase = 0.25
     soil_capacity_seismic_dbe_increase = 0.5

@@ -3,7 +3,7 @@ from material import material
 from material import water
 import markdown2
 from markdown2 import Markdown
-from misc import roundOff
+from misc import roundOff,gravity_constant
 
 markdowner = Markdown()
 
@@ -88,7 +88,7 @@ class shape_octagon (shape):
     center : point
     side : float
     area_factor = 2 * (1 + math.sqrt(2))
-    section_modulus_factor = 1.540437583
+    section_modulus_factor = 1.540437583               #0.1011422 * cube(D) * 1.0823922
     section_modulus_mm_factor = 1.423178754            #0.1011422 * cube(D)
     #PIP Factors
     side_diagonal_factor = 2.414213562
@@ -114,15 +114,18 @@ class object_3d :
 
     def properties_report(self):
         report_html_list = []
-        report_html_list.append("| Property | Value |" + "\n" + "| --- | --- |")
+        width_table = [200,100]
+        report_html_list.append("| Property | Value |")
+        report_html_list.append("|:---|:---:|")
+        report_html_list.append("".join(map(lambda wid: "|<img width=" + str(wid) + "/>", width_table)))
         report_html_list.append("| Shape | " + self.shape_name + "|")
         report_html_list.append("| Dimension | " + roundOff(self.shape_object.dimension())+ "|")
         report_html_list.append("| Top Elevation | " + roundOff(self.top_elevation)+ "|")
         report_html_list.append("| Bottom Elevation | " + roundOff(self.bottom_elevation)+ "|")
         report_html_list.append("| Density | " + roundOff(self.material.density)+ "|")
         report_html_list.append("| Area | " + roundOff(self.shape_object.area())+ "|")
-        report_html_list.append("| Section Modulus (major) | " + roundOff(self.shape_object.section_modulus_major())+ "|")
-        report_html_list.append("| Section Modulus (minor) | " + roundOff(self.shape_object.section_modulus_minor())+ "|")
+        report_html_list.append("| Section Modulus (Diameter) | " + roundOff(self.shape_object.section_modulus_major())+ "|")
+        report_html_list.append("| Section Modulus (Diagonal) | " + roundOff(self.shape_object.section_modulus_minor())+ "|")
         report_html_list.append("| Weight | " + roundOff(self.weight())+ "|")
         return markdown2.markdown(text="\n".join(report_html_list), extras=["tables"])
 
@@ -143,16 +146,16 @@ class object_3d :
     
     def weight_water(self):
         area = self.shape_object.area() 
-        weight1 = max (self.top_elevation - self.bottom_elevation , 0) * area * self.material.density
-        weight2 = max (self.water_elevation - self.bottom_elevation , 0) * area * water.density
+        weight1 = max (self.top_elevation - self.bottom_elevation , 0) * area * self.material.density * gravity_constant
+        weight2 = max (self.water_elevation - self.bottom_elevation , 0) * area * water.density * gravity_constant
         return weight1 + weight2
     
     def weight(self):
         area = self.shape_object.area() 
-        weight = max (self.top_elevation - self.bottom_elevation , 0) * area * self.material.density
+        weight = max (self.top_elevation - self.bottom_elevation , 0) * area * self.material.density * gravity_constant
         return weight
     
     def weight_negative(self):
         area = self.shape_object.area() 
-        weight = (self.top_elevation - self.bottom_elevation) * area * self.material.density
+        weight = (self.top_elevation - self.bottom_elevation) * area * self.material.density * gravity_constant
         return weight

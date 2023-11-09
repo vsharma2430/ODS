@@ -64,6 +64,11 @@ html, body {
     font-family : 'Courier New', Courier, monospace;
     font-weight: bold;
   }
+
+  td{
+    border-left:1px solid;
+    border-top:1px solid;
+  }
   
   a:link,
   a:visited,

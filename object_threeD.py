@@ -56,17 +56,12 @@ class shape_rectangle (shape):
     length_y : float
 
 class Triangle(shape):
-    def __init__(self, base, height, side1, side2, side3):
+    def __init__(self, base, height):
         self.base = base
         self.height = height
-        self.side1 = side1
-        self.side2 = side2
-        self.side3 = side3
 
     def area(self):
         return 0.5 * self.base * self.height
-    def perimeter(self):
-        return self.side1 + self.side2 + self.side3
 
 class shape_hexagon (shape):
     center : point
@@ -159,3 +154,16 @@ class object_3d :
         area = self.shape_object.area() 
         weight = (self.top_elevation - self.bottom_elevation) * area * self.material.density * gravity_constant
         return weight
+
+def contact_area_octagon(k:float,diagonal:float):
+    kD = k*diagonal
+    angle1 = math.radians(135)
+    angle2 = 2 * math.radians(90 - 135/2)
+    side_octagon = diagonal / shape_octagon.side_diagonal_factor
+    limit_x1 = side_octagon * math.sin(angle1/2)
+    limit_x2 = limit_x1 +  side_octagon * math.sin(angle2/2)
+    limit_x3 = limit_x1 +  2 * limit_x2
+
+    area : float
+    if(kD<=limit_x1):
+        area = Triangle()

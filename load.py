@@ -10,11 +10,11 @@ class load_data:
     moment_factor : float
     shear_factor : float
 
-    def __init__(self,name="load",axial=1.0,moment=1.0,shear=1.0,axial_factor=1.0,moment_factor = 1.0,shear_factor=1.0):
+    def __init__(self,name="load",axial=1.0,shear=1.0,moment=1.0,axial_factor=1.0,moment_factor = 1.0,shear_factor=1.0):
         self.name = name
         self.axial = axial
-        self.moment = moment
         self.shear = shear
+        self.moment = moment
         self.axial_factor = axial_factor
         self.moment_factor = moment_factor
         self.shear_factor = shear_factor
@@ -25,7 +25,7 @@ class load_data:
         report_html_list.append("| Type | Value | Factor")
         report_html_list.append("|:---|:---:|:---:|")
         report_html_list.append("".join(map(lambda wid: "|<img width=" + str(wid) + "/>", width_table)))
-        report_html_list.append("| Name | " + self.name + "|")
+        report_html_list.append("| Name | " + self.name + "| |")
         report_html_list.append("| Axial | " + roundOff(self.axial) + "|" + roundOff(self.axial_factor) + "|")
         report_html_list.append("| Shear | " + roundOff(self.shear) + "|" + roundOff(self.shear_factor) + "|")
         report_html_list.append("| Moment | " + roundOff(self.moment) + "|" + roundOff(self.moment_factor) + "|")

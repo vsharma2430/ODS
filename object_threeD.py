@@ -117,6 +117,7 @@ class object_3d :
         report_html_list.append("| Dimension | " + roundOff(self.shape_object.dimension())+ "|")
         report_html_list.append("| Top Elevation | " + roundOff(self.top_elevation)+ "|")
         report_html_list.append("| Bottom Elevation | " + roundOff(self.bottom_elevation)+ "|")
+        report_html_list.append("| Length | " + roundOff(self.top_elevation - self.bottom_elevation)+ "|")
         report_html_list.append("| Density | " + roundOff(self.material.density)+ "|")
         report_html_list.append("| Area | " + roundOff(self.shape_object.area())+ "|")
         report_html_list.append("| Section Modulus (Diameter) | " + roundOff(self.shape_object.section_modulus_major())+ "|")
@@ -141,18 +142,18 @@ class object_3d :
     
     def weight_water(self):
         area = self.shape_object.area() 
-        weight1 = max (self.top_elevation - self.bottom_elevation , 0) * area * self.material.density * gravity_constant
-        weight2 = max (self.water_elevation - self.bottom_elevation , 0) * area * water.density * gravity_constant
+        weight1 = max (self.top_elevation - self.bottom_elevation , 0) * area * self.material.density 
+        weight2 = max (self.water_elevation - self.bottom_elevation , 0) * area * water.density 
         return weight1 + weight2
     
     def weight(self):
         area = self.shape_object.area() 
-        weight = max (self.top_elevation - self.bottom_elevation , 0) * area * self.material.density * gravity_constant
+        weight = max (self.top_elevation - self.bottom_elevation , 0) * area * self.material.density 
         return weight
     
     def weight_negative(self):
         area = self.shape_object.area() 
-        weight = (self.top_elevation - self.bottom_elevation) * area * self.material.density * gravity_constant
+        weight = (self.top_elevation - self.bottom_elevation) * area * self.material.density 
         return weight
 
 def contact_area_octagon(k:float,diagonal:float):

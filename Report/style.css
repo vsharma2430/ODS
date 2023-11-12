@@ -58,11 +58,14 @@ html, body {
   h5 {
     font-size: 1.1em;
     font-weight: 300;
+    margin-left: 30px;
+
   }
 
   h6 {
     font-size: 1em;
     font-weight: 200;
+    margin-left: 30px;
   }
   
 

@@ -1,8 +1,13 @@
 from bolt import bolt_data
 from load import vessel_load
-from vessel_segment import vessel_segment
+
+class vessel_segment:
+    bottom_elevation :float
+    top_elevation :float
+    diameter :float
+    shape_factor :float
 
 class equipment : 
-    bolt = bolt_data()
-    load = vessel_load()
+    bolt : bolt_data
+    load : vessel_load
     vessel_segments = []

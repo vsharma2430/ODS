@@ -1,5 +1,5 @@
 from object_threeD import object_3d
-from material import concrete
+from material import concrete,steel,material
 from misc import roundOff
 import markdown2
 
@@ -53,6 +53,18 @@ class cover_thickness :
         report_html_list.append("| Bottom Cover | " + roundOff(self.bottom_cover) + "|")
         report_html_list.append("| Side Cover | " + roundOff(self.side_cover) + "|")
         return markdown2.markdown(text="\n".join(report_html_list), extras=["tables"])
+    
+class reinforcement:
+    percentageRF:float
+    no_of_bars:int
+    bar_size:float
+    bar_material:material
+
+    def __init__(self,perecentageRF:float=0,no_of_bars:int=0,bar_size:float=0,bar_material:material=steel) -> None:
+        self.percentageRF = perecentageRF
+        self.no_of_bars = no_of_bars
+        self.bar_size = bar_size
+        self.bar_material = bar_material
 
 class open_foundation : 
     pedestal : object_3d

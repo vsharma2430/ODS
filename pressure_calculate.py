@@ -119,9 +119,27 @@ def calculate_fsc_flexure(fy:float):
     else:
         return 0.746*fy
     
+valA = 101.97162129779
+
+def calculate_Z(designMoment:float,rfdesignFactor:float,rf_width:float,rf_depth:float):
+    return designMoment * rfdesignFactor / (rf_width * rf_depth * rf_depth)
+
+def calculate_add_double_pt_primary(moment:float,fy:float,depth:float):
+    return moment / (0.87 * fy * valA * depth )
+ 
+def calculate_add_double_pt_secondary(add_double_primary:float,fy:float,fsc_flexure:float):
+    return 0.87 * fy * valA * add_double_primary / (fsc_flexure * valA - 0.447 * fy * valA)
+        
 def calculate_mu_lim(xubyd:float,rf_width:float,rf_depth:float,fck:float,fy:float):
     xu_lim = xubyd*rf_depth
     return 0.362 * fck * rf_width * xu_lim * (rf_depth-0.42*xu_lim)/1000
+
+def calculate_min_rf(fy:float):
+    fy_compare = PaToMPa(fy)
+    if(compare_value_delta(fy_compare,500,value_delta)):
+        return 0.12
+    else:
+        return 0.15
 
 def calculate_rf(design_moment:float,rf_factor:float,rf_width:float,rf_depth:float,fck:float,fy:float):
     R = design_moment/(rf_width*rf_depth*rf_depth)
@@ -129,8 +147,23 @@ def calculate_rf(design_moment:float,rf_factor:float,rf_width:float,rf_depth:flo
     if(var1>0):
         var2 = math.sqrt(var1)
         rf = fck/(2*fy)*(1-var2)
-        return [R,rf]
-    return [0]
+        return [rf,R]
+    return [0,0]
+
+def calculate_rf_single(design_moment:float,rf_factor:float,rf_width:float,rf_depth:float,fck:float,fy:float):
+    main_rf_arr = calculate_rf(design_moment,rf_factor,rf_width,rf_depth,fck,fy)
+    return main_rf_arr
+
+def calculate_rf_double(design_moment:float,limit_moment:float,rf_factor:float,rf_width:float,rf_depth:float,fck:float,fy:float,fsc_flexure:float):
+    main_rf_arr = calculate_rf(limit_moment,rf_factor,rf_width,rf_depth,fck,fy)
+    add_double_pt_1 = calculate_add_double_pt_primary(design_moment-limit_moment,fy,rf_depth)
+    add_double_pt_2 = calculate_add_double_pt_secondary(add_double_pt_1,fy,fsc_flexure)
+    
+    main_rf = main_rf_arr[0]+add_double_pt_1
+    secondary_rf = add_double_pt_2
+    
+    return [main_rf,secondary_rf,main_rf_arr[0],add_double_pt_1,add_double_pt_2]
+
 
 #print(calculate_moment_face(1,2,calculate_pressure_in_strips(100,0,0,1024),calculate_length_of_strips("octagon",2/shape_octagon.side_diagonal_factor,1024),1024))
 #print(calculate_shear_dby2(1,2,0.5,calculate_pressure_in_strips(100,0,0,1024),calculate_length_of_strips("octagon",2/shape_octagon.side_diagonal_factor,1024),1024))

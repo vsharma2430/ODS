@@ -1,4 +1,4 @@
-from misc import gravity_constant,tonneToN,MPaToPa
+from .misc import gravity_constant,tonneToN,MPaToPa
 
 class soil_property :
     soil_capacity = tonneToN(10)       #t/m2 to n/m2

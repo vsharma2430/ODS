@@ -1,5 +1,5 @@
 import markdown2
-from misc import roundOff
+from .misc import roundOff
 
 class load_data:
     name : str

@@ -1,6 +1,6 @@
-from load import load_data
 import markdown2
-from misc import roundOff
+from .load import load_data
+from .misc import roundOff
 
 class factored_load :
     factor : float

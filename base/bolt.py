@@ -1,4 +1,4 @@
-from material import material
+from .material import material
 
 class bolt_data : 
     bolt_circle_diameter = 1.0

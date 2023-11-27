@@ -1,6 +1,6 @@
-from object_threeD import object_3d
-from material import concrete,steel,material
-from misc import roundOff
+from .object_threeD import object_3d
+from .material import concrete,steel,material
+from .misc import roundOff
 import markdown2
 
 # FOUNDATION CONFIGURATION 

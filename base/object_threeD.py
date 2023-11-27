@@ -1,9 +1,9 @@
 import math
-from material import material
-from material import water
 import markdown2
 from markdown2 import Markdown
-from misc import roundOff,gravity_constant
+
+from .material import material,water
+from .misc import roundOff,gravity_constant
 
 markdowner = Markdown()
 

@@ -24,6 +24,12 @@ def MPaToPa(value:float):   #oe N/mm2 to Pa
 def PaToMPa(value:float):
     return value/1000000
 
+def mmtToM(value:float):
+    return value/1000
+
+def Mtomm(value:float):
+    return value/1000
+
 def quadratic_solver(a:float,b:float,c:float):
     x1:float = 0
     x2:float = 0

@@ -1,5 +1,5 @@
-from bolt import bolt_data
-from load import vessel_load
+from .bolt import bolt_data
+from .load import vessel_load
 
 class vessel_segment:
     bottom_elevation :float

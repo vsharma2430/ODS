@@ -1,9 +1,7 @@
 import math
-import numpy 
-import asyncio
-from object_threeD import shape_octagon
 import matplotlib.pyplot as plt
-from misc import compare_value_delta,value_delta,PaToMPa
+from .object_threeD import shape_octagon
+from .misc import compare_value_delta,value_delta,PaToMPa,Mtomm
 
 def calculate_length_of_strips(shape:str,side:float,discrete_unit:int):
     length_res = []
@@ -142,12 +140,16 @@ def calculate_min_rf(fy:float):
         return 0.15
 
 def calculate_rf(design_moment:float,rf_factor:float,rf_width:float,rf_depth:float,fck:float,fy:float):
-    R = design_moment/(rf_width*rf_depth*rf_depth)
-    var1 = 1 - 4.598 * R / fck
-    if(var1>0):
-        var2 = math.sqrt(var1)
-        rf = fck/(2*fy)*(1-var2)
-        return [rf,R]
+    fck = PaToMPa(fck)
+    fy = PaToMPa(fy)
+    rf_width = Mtomm(rf_width)
+    rf_depth = Mtomm(rf_depth)
+    print(design_moment)
+    var1 = 1 - 4.6 * design_moment / ( fck* rf_width * rf_depth * rf_depth)
+    print(var1)
+    if var1>0:
+        var2 = 1- math.sqrt(var1)
+        return 0.5*fck/fy*var2
     return [0,0]
 
 def calculate_rf_single(design_moment:float,rf_factor:float,rf_width:float,rf_depth:float,fck:float,fy:float):

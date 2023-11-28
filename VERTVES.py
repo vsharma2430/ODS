@@ -6,7 +6,8 @@ import markdown2
 #custom imports
 from base import *
 
-report_html = open("Report/vertes_report.html", "w")
+report_file = "Report/vertes_report.html"
+report_html = open(report_file, "w")
 report_html_list = ["<html><head><link rel=\"stylesheet\" href=\"style.css\"></head><body>"]
 
 pedestal_side = 0.7
@@ -306,7 +307,7 @@ for i in range(len(inbuilt_load_combinations)):
     if(moments_i[1]>0 and moments_i[0]>0):
         design_moment = max(moments_i)
         main_rf = calculate_rf_single(design_moment,inbuilt_load_combinations_i.reinforcement_factor,rf_width,rf_depth_bottom,concrete.property.fck,steel.property.fy)
-        print(main_rf)
+        #print(main_rf)
     report_html_list_i_1.append( "|" + inbuilt_load_combinations_i.load_ID + \
                                  "|" + roundOff(axial_i) + " |" + roundOff(shear_i) + " |" + roundOff(moment_i) + \
                                  "|" + roundOff(e_dividedBy_D_i) + "|" + roundOff(L_i) + "|" + roundOff(k_i) + \
@@ -322,3 +323,5 @@ report_html_list.append(markdown2.markdown(text="\n".join(report_html_list_i_1),
 report_html_list.append("</html></body>")
 report_html.writelines(report_html_list)
 report_html.close()
+
+open(report_file)

@@ -2,6 +2,7 @@ import math
 import matplotlib.pyplot as plt
 from .object_threeD import shape_octagon
 from .misc import compare_value_delta,value_delta,PaToMPa,Mtomm
+valA = 101.97162129779
 
 def calculate_length_of_strips(shape:str,side:float,discrete_unit:int):
     length_res = []
@@ -117,8 +118,6 @@ def calculate_fsc_flexure(fy:float):
     else:
         return 0.746*fy
     
-valA = 101.97162129779
-
 def calculate_Z(designMoment:float,rfdesignFactor:float,rf_width:float,rf_depth:float):
     return designMoment * rfdesignFactor / (rf_width * rf_depth * rf_depth)
 
@@ -147,9 +146,11 @@ def calculate_rf(design_moment:float,rf_factor:float,rf_width:float,rf_depth:flo
     print(design_moment)
     var1 = 1 - 4.6 * design_moment / ( fck* rf_width * rf_depth * rf_depth)
     print(var1)
+    
     if var1>0:
         var2 = 1- math.sqrt(var1)
         return 0.5*fck/fy*var2
+    
     return [0,0]
 
 def calculate_rf_single(design_moment:float,rf_factor:float,rf_width:float,rf_depth:float,fck:float,fy:float):

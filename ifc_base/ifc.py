@@ -3,7 +3,8 @@ import ifcopenshell.geom
 import ifcopenshell.util.shape
 import multiprocessing
 
-ifc_file = ifcopenshell.open(r'C:\Users\D097\Downloads\SteelFrame.Ifc')
+filename = (r'C:\Users\D097\Downloads\SteelFrame.Ifc')
+ifc_file = ifcopenshell.open(filename)
 
 settings = ifcopenshell.geom.settings()
 iterator = ifcopenshell.geom.iterator(settings, ifc_file, multiprocessing.cpu_count())

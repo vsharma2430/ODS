@@ -35,8 +35,8 @@ sbc_net = soil.property.soil_capacity
 weight_of_footing = openFoundation.foundation.weight()
 weight_of_pedestal = openFoundation.pedestal.weight()
 
-foundation_area = openFoundation.foundation.shape_object.area()
-pedestal_area = openFoundation.pedestal.shape_object.area()
+foundation_area:float = openFoundation.foundation.shape_object.area()
+pedestal_area:float = openFoundation.pedestal.shape_object.area()
 soil_area = max(foundation_area - pedestal_area,0)
 foundation_section_modulus_major = openFoundation.foundation.shape_object.section_modulus_major()
 foundation_section_modulus_minor = openFoundation.foundation.shape_object.section_modulus_minor()
@@ -307,7 +307,8 @@ for i in range(len(inbuilt_load_combinations)):
     if(moments_i[1]>0 and moments_i[0]>0):
         design_moment = max(moments_i)
         main_rf = calculate_rf_single(design_moment*1000,inbuilt_load_combinations_i.reinforcement_factor,rf_width,rf_depth_bottom,concrete.property.fck,steel.property.fy)
-    else
+    else:
+        continue
                 
     report_html_list_i_1.append( "|" + inbuilt_load_combinations_i.load_ID + \
                                  "|" + roundOff(axial_i) + " |" + roundOff(shear_i) + " |" + roundOff(moment_i) + \

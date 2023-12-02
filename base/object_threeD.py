@@ -13,14 +13,15 @@ class point :
     z = 1.0
 
 class shape:
-    def area(self):
-        pass
-    def section_modulus_major(self):
-        pass
-    def section_modulus_minor(self):
-        pass
-    def dimension(self):
-        pass
+    def area(self)->float:
+        return 0
+    def section_modulus_major(self)->float:
+        return 0
+    def section_modulus_minor(self)->float:
+        return 0
+    def dimension(self)->float:
+        return 0
+
 
 class shape_circle (shape):
     center : point
@@ -134,7 +135,7 @@ class object_3d :
             self.shape_object = shape_circle()
             self.shape_object.radius = dimension
         elif(self.shape_name == "hexagon"):
-            self.shape_object = shape_circle()
+            self.shape_object = shape_hexagon()
             self.shape_object.side = dimension
         elif(self.shape_name == "octagon"):
             self.shape_object = shape_octagon()
@@ -155,16 +156,3 @@ class object_3d :
         area = self.shape_object.area() 
         weight = (self.top_elevation - self.bottom_elevation) * area * self.material.density 
         return weight
-
-def contact_area_octagon(k:float,diagonal:float):
-    kD = k*diagonal
-    angle1 = math.radians(135)
-    angle2 = 2 * math.radians(90 - 135/2)
-    side_octagon = diagonal / shape_octagon.side_diagonal_factor
-    limit_x1 = side_octagon * math.sin(angle1/2)
-    limit_x2 = limit_x1 +  side_octagon * math.sin(angle2/2)
-    limit_x3 = limit_x1 +  2 * limit_x2
-
-    area : float
-    if(kD<=limit_x1):
-        area = Triangle()

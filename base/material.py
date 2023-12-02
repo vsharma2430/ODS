@@ -1,14 +1,18 @@
 from .misc import gravity_constant,tonneToN,MPaToPa
 
-class soil_property :
-    soil_capacity = tonneToN(10)       #t/m2 to n/m2
-    coeff_friction = 0.3
+class material_property :
+    def property(self):
+        pass
 
-class steel_property :
+class soil_property(material_property) :
+    soil_capacity:float = tonneToN(10)       #t/m2 to n/m2
+    coeff_friction:float= 0.3
+
+class steel_property(material_property) :
     fy :float      #in Pa / Yield strength
     ft :float      #in Pa / Tensile strength
 
-class concrete_property : 
+class concrete_property(material_property) :
     fck :float     #compressive strength 
     fct :float     #tensile strength 
 
@@ -19,6 +23,7 @@ class material :
     density :float
     sub_water_density :float
     elasticity_modulus :float
+    property:material_property
 
     def __init__(self, name , material_grade , density):
         self.name = name

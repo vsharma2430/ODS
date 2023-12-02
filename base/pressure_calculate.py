@@ -43,7 +43,7 @@ def calculate_pressure_in_strips(pmax:float,pmin:float,swp:float,sp:float,k:floa
 
     return pressure_res
 
-def calculate_moment_face(equivalent_pedestal_square_size:float, footing_diagonal:float,pressure:[],length:[],discrete_unit:int):
+def calculate_moment_face(equivalent_pedestal_square_size:float, footing_diagonal:float,pressure:list[float],length:list[float],discrete_unit:int):
     discrete_size = footing_diagonal / discrete_unit
     location1 = int((footing_diagonal - equivalent_pedestal_square_size)/2/footing_diagonal * discrete_unit)
     location2 = int(((footing_diagonal - equivalent_pedestal_square_size)/2+equivalent_pedestal_square_size)/footing_diagonal * discrete_unit)
@@ -69,7 +69,7 @@ def calculate_moment_face(equivalent_pedestal_square_size:float, footing_diagona
         moment_2 = moment_2 + moment_i
     return [moment_1,moment_2]
 
-def calculate_shear_dby2(equivalent_pedestal_square_size:float, footing_diagonal:float,footing_depth:float,pressure:[],length:[],discrete_unit:int):
+def calculate_shear_dby2(equivalent_pedestal_square_size:float, footing_diagonal:float,footing_depth:float,pressure:list[float],length:list[float],discrete_unit:int):
     discrete_size = footing_diagonal / discrete_unit
     location1 = int(((footing_diagonal - equivalent_pedestal_square_size/2)/2 - (footing_depth/2) )/footing_diagonal * discrete_unit)
     location2 = int((((footing_diagonal - equivalent_pedestal_square_size)/2)+equivalent_pedestal_square_size+(footing_depth/2))/footing_diagonal * discrete_unit)

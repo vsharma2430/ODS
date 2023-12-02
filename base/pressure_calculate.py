@@ -1,7 +1,7 @@
 import math
 import matplotlib.pyplot as plt
 from .object_threeD import shape_octagon
-from .misc import compare_value_delta,value_delta,PaToMPa,Mtomm
+from .misc import NMtokNm, compare_value_delta,value_delta,PaToMPa,Mtomm
 valA = 101.97162129779
 
 def calculate_length_of_strips(shape:str,side:float,discrete_unit:int):
@@ -139,19 +139,31 @@ def calculate_min_rf(fy:float):
         return 0.15
 
 def calculate_rf(design_moment:float,rf_factor:float,rf_width:float,rf_depth:float,fck:float,fy:float):
+    design_moment = NMtokNm(design_moment)
     fck = PaToMPa(fck)
     fy = PaToMPa(fy)
-    rf_width = Mtomm(rf_width)
     rf_depth = Mtomm(rf_depth)
-    print(design_moment)
-    var1 = 1 - 4.6 * design_moment / ( fck* rf_width * rf_depth * rf_depth)
-    print(var1)
-    
-    if var1>0:
-        var2 = 1- math.sqrt(var1)
-        return 0.5*fck/fy*var2
-    
-    return [0,0]
+    rf_width = Mtomm(rf_width)
+    a = 0.87 * (fy*fy)/(fck*rf_width)
+    b = -0.87 * fy * rf_depth
+    c = design_moment*pow(10,6)
+    d = math.sqrt(b*b - 4*a*c)
+
+    """ TEST STATEMENTS
+    print(f'Design Moment = {design_moment}')
+    print(f'R/F Width = {rf_width}')
+    print(f'R/F Depth = {rf_depth}')
+    print(f'fck = {fck}')
+    print(f'fy = {fy}')
+    print(f'a = {a}')
+    print(f'b = {b}')
+    print(f'c = {c}')
+    print(f'd = {d}')
+    """
+    if(d>0):
+        return (0.5*(-b-d)/(a)) * 100 / (rf_depth * rf_width)
+
+    return 0
 
 def calculate_rf_single(design_moment:float,rf_factor:float,rf_width:float,rf_depth:float,fck:float,fy:float):
     main_rf_arr = calculate_rf(design_moment,rf_factor,rf_width,rf_depth,fck,fy)
@@ -162,10 +174,10 @@ def calculate_rf_double(design_moment:float,limit_moment:float,rf_factor:float,r
     add_double_pt_1 = calculate_add_double_pt_primary(design_moment-limit_moment,fy,rf_depth)
     add_double_pt_2 = calculate_add_double_pt_secondary(add_double_pt_1,fy,fsc_flexure)
     
-    main_rf = main_rf_arr[0]+add_double_pt_1
+    main_rf = main_rf_arr+add_double_pt_1
     secondary_rf = add_double_pt_2
     
-    return [main_rf,secondary_rf,main_rf_arr[0],add_double_pt_1,add_double_pt_2]
+    return [main_rf,secondary_rf,main_rf_arr,add_double_pt_1,add_double_pt_2]
 
 
 #print(calculate_moment_face(1,2,calculate_pressure_in_strips(100,0,0,1024),calculate_length_of_strips("octagon",2/shape_octagon.side_diagonal_factor,1024),1024))

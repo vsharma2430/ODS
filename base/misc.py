@@ -28,7 +28,13 @@ def mmtToM(value:float):
     return value/1000
 
 def Mtomm(value:float):
+    return value*1000
+
+def NMtokNm(value:float):
     return value/1000
+
+def kNMtoNm(value:float):
+    return value*1000
 
 def quadratic_solver(a:float,b:float,c:float):
     x1:float = 0

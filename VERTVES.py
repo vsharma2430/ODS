@@ -306,14 +306,15 @@ for i in range(len(inbuilt_load_combinations)):
     
     if(moments_i[1]>0 and moments_i[0]>0):
         design_moment = max(moments_i)
-        main_rf = calculate_rf_single(design_moment,inbuilt_load_combinations_i.reinforcement_factor,rf_width,rf_depth_bottom,concrete.property.fck,steel.property.fy)
-        #print(main_rf)
+        main_rf = calculate_rf_single(design_moment*1000,inbuilt_load_combinations_i.reinforcement_factor,rf_width,rf_depth_bottom,concrete.property.fck,steel.property.fy)
+    else
+                
     report_html_list_i_1.append( "|" + inbuilt_load_combinations_i.load_ID + \
                                  "|" + roundOff(axial_i) + " |" + roundOff(shear_i) + " |" + roundOff(moment_i) + \
                                  "|" + roundOff(e_dividedBy_D_i) + "|" + roundOff(L_i) + "|" + roundOff(k_i) + \
                                  "|" + roundOff(pmax_i) + "|" + roundOff(pmin_i) + \
                                  "|" + roundOff(float(moments_i[0])) + " |" + roundOff(float(moments_i[1]))+ \
-                                 "|" + roundOff(main_rf[0]) + " |" + roundOff(0) + "|")
+                                 "|" + str(round(main_rf,3)) + " |" + roundOff(0) + "|")
 
     
     #CALCULATE FACE LOCATIONS IN PIXELS AND CALCULATE MOMENT

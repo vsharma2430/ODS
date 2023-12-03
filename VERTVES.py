@@ -274,7 +274,7 @@ report_html_list_i_1.append( "| RF Width |" + roundOff(rf_width)+ "|")
 report_html_list_i_1.append( "| f<sub>y</sub> |" + roundOff(steel.property.fy)+ "|") 
 report_html_list_i_1.append( "| (f<sub>sc</sub>)<sub>flexure</sub> |" + roundOff(fsc_flexure)+ "|") 
 report_html_list_i_1.append( "| (M<sub>uLim</sub>)<sub>bottom</sub> |" + roundOff(muLim_bottom)+ "|") 
-report_html_list_i_1.append( "| M<sub>uLim</sub><sub>top</sub>|" + roundOff(muLim_top)+ "|") 
+report_html_list_i_1.append( "| (M<sub>uLim</sub>)<sub>top</sub>|" + roundOff(muLim_top)+ "|") 
 report_html_list_i_1.append( "| RF<sub>min</sub>(%)|" + roundOff(reinforcement_minimum.percentageRF)+ "|") 
 report_html_list_i_1.append( "| RF<sub>max</sub>(%)|" + roundOff(reinforcement_maximum.percentageRF)+ "|") 
 report_html_list.append(markdown2.markdown(text="\n".join(report_html_list_i_1), extras=["tables"]))
@@ -303,19 +303,23 @@ for i in range(len(inbuilt_load_combinations)):
 
     pressure_strip = calculate_pressure_in_strips(pmax_i,pmin_i,self_weight_pressure,soil_pressure,k_i,discrete_pixel)
     moments_i = calculate_moment_face(equivalent_square_pedestal_side,foundation_diameter,pressure_strip,length_of_strips,discrete_pixel)
+
+    rf_top = 0
+    rf_bottom = 0
     
-    if(moments_i[1]>0 and moments_i[0]>0):
+    if(moments_i[0]>0):
         design_moment = max(moments_i)
-        main_rf = calculate_rf_single(design_moment*1000,inbuilt_load_combinations_i.reinforcement_factor,rf_width,rf_depth_bottom,concrete.property.fck,steel.property.fy)
-    else:
-        continue
-                
+        rf_bottom = calculate_rf_single(design_moment*1000,inbuilt_load_combinations_i.reinforcement_factor,rf_width,rf_depth_bottom,concrete.property.fck,steel.property.fy)
+    if(moments_i[1]<0):
+        design_moment = abs(min(moments_i))
+        rf_top = calculate_rf_single(design_moment*1000,inbuilt_load_combinations_i.reinforcement_factor,rf_width,rf_depth_top,concrete.property.fck,steel.property.fy)
+
     report_html_list_i_1.append( "|" + inbuilt_load_combinations_i.load_ID + \
                                  "|" + roundOff(axial_i) + " |" + roundOff(shear_i) + " |" + roundOff(moment_i) + \
                                  "|" + roundOff(e_dividedBy_D_i) + "|" + roundOff(L_i) + "|" + roundOff(k_i) + \
                                  "|" + roundOff(pmax_i) + "|" + roundOff(pmin_i) + \
                                  "|" + roundOff(float(moments_i[0])) + " |" + roundOff(float(moments_i[1]))+ \
-                                 "|" + str(round(main_rf,3)) + " |" + roundOff(0) + "|")
+                                 "|" + str(round(rf_bottom,4)) + " |" + str(round(rf_top,4)) + "|")
 
     
     #CALCULATE FACE LOCATIONS IN PIXELS AND CALCULATE MOMENT

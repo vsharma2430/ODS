@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui\test_ui.ui'
+# Form implementation generated from reading ui file 'ui/test_ui.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -10,9 +10,33 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+from ui import *
+from base import *
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
+
+        form_controls = {}
+        form_data = []
+        form_data.append(ui_form_base("design_moment","Design Moment(kN-m)",default_data="9817.6"))
+        form_data.append(ui_form_base("rf_width","R/F Width(m)","2"))
+        form_data.append(ui_form_base("rf_depth","R/F Depth(m)","1"))
+        form_data.append(ui_form_base("fck","Fck(MPa)","30"))
+        form_data.append(ui_form_base("fy","Fy(MPa)","500"))
+
+        form_controls = makeAForm(form_data)
+
+        def clickMethod(self):
+            design_moment = kNMtoNm(getFloatFromEditText(form_controls["design_moment"]))
+            rf_width = getFloatFromEditText(form_controls["rf_width"])
+            rf_depth = getFloatFromEditText(form_controls["rf_depth"])
+            fck = MPaToPa(getFloatFromEditText(form_controls["fck"]))
+            fy = MPaToPa(getFloatFromEditText(form_controls["fy"]))
+            result = round(calculate_rf(design_moment,1,rf_width,rf_depth,fck,fy),5)
+            setStringToEditText(form_controls["result"],str(result))
+
+        form_controls["submit"].clicked.connect(clickMethod)
+
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(640, 480)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -27,9 +51,24 @@ class Ui_MainWindow(object):
         self.tabWidget.setObjectName("tabWidget")
         self.tab_1 = QtWidgets.QWidget()
         self.tab_1.setObjectName("tab_1")
+        self.verticalLayoutWidget_3 = QtWidgets.QWidget(self.tab_1)
+        self.verticalLayoutWidget_3.setGeometry(QtCore.QRect(0, 0, 631, 401))
+        self.verticalLayoutWidget_3.setObjectName("verticalLayoutWidget_3")
+        
+        self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_3)
+        #self.verticalLayout_4 = form_controls["window"]
+        self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.tabWidget.addTab(self.tab_1, "")
         self.tab_2 = QtWidgets.QWidget()
         self.tab_2.setObjectName("tab_2")
+        self.verticalLayoutWidget_2 = QtWidgets.QWidget(self.tab_2)
+        self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(0, 0, 631, 401))
+        self.verticalLayoutWidget_2.setObjectName("verticalLayoutWidget_2")
+
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_2)
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.tabWidget.addTab(self.tab_2, "")
         self.verticalLayout.addWidget(self.tabWidget)
         MainWindow.setCentralWidget(self.centralwidget)
@@ -42,21 +81,20 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "VERTVES Functions Test UI"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_1), _translate("MainWindow", "R/F Calculator"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Mu Lim"))
-
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_1), _translate("MainWindow", "Tab 1"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Tab 2"))
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
+    w = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    ui.setupUi(w)
+    w.show()
     sys.exit(app.exec_())

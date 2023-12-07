@@ -1,3 +1,21 @@
+#PYQT DESIGNER COMMANDS
+#OPEN - qt5-tools designer <file_name>.ui
+#EXAMPLE - qt5-tools designer ui/test_ui.ui
+#CONVERT - pyuic5 -o <output_file>.py <input_file>.ui
+#EXAMPLE CONVERT - pyuic5 -o test_ui.py  ui/test_ui.ui 
+
+#Add the following command at the end of py file for loading of UI
+"""
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    w = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(w)
+    w.show()
+    sys.exit(app.exec_())
+"""
+
 from enum import Enum
 from PyQt5.QtGui import (QFont)
 from PyQt5.QtWidgets import (
@@ -9,7 +27,6 @@ from PyQt5.QtWidgets import (
     QPushButton,
     QLabel
 )
-from numpy import var
 
 def getFont(fontSize):
     font = QFont("Arial")
@@ -98,7 +115,7 @@ class ui_form_base:
         self.default_value = default_data
         self.input_type = input_type
 
-def makeAForm(formWindow:QDialog,items):
+def makeAForm(items):
     ui_rows = []    
     columnSize = [500,500]
     rowSize = 40
@@ -120,7 +137,7 @@ def makeAForm(formWindow:QDialog,items):
     ui_rows.append(submit_button_row[0])
 
     stack = getVerticalLayout(ui_rows)
-    formWindow.setLayout(stack)
+    form_controls["window"] = stack
 
     return form_controls
 

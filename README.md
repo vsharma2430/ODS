@@ -8,3 +8,5 @@ Features envisioned :
 3. PDF report generation using reportlab.
 4. Modules for drawing generation using pyautocad.
 5. 3D model generation using ifcopenshell.
+
+trello link : https://trello.com/b/ipg3Xar7/odskanban
